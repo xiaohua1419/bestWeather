@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by xiaohua on 2016/11/7.
  */
 
-public class bestWeatherOpenHelper extends SQLiteOpenHelper {
+public class BestWeatherOpenHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_PROVINCE = "create table Province ("
             + "id integer primary key autoincrement, "
@@ -31,7 +31,7 @@ public class bestWeatherOpenHelper extends SQLiteOpenHelper {
             + "county_code text, "
             + "city_id integer)";
 
-    public bestWeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public BestWeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 

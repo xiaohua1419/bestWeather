@@ -2,7 +2,7 @@ package com.example.xiaohua.bestweather.util;
 
 import android.text.TextUtils;
 
-import com.example.xiaohua.bestweather.db.bestWeatherDB;
+import com.example.xiaohua.bestweather.db.BestWeatherDB;
 import com.example.xiaohua.bestweather.model.City;
 import com.example.xiaohua.bestweather.model.County;
 import com.example.xiaohua.bestweather.model.Province;
@@ -13,7 +13,7 @@ import com.example.xiaohua.bestweather.model.Province;
 
 public class Utility {
 
-    public synchronized static boolean handleProvinceResponse(bestWeatherDB bestWeatherDB, String response) {
+    public synchronized static boolean handleProvinceResponse(BestWeatherDB BestWeatherDB, String response) {
         if (!TextUtils.isEmpty(response)) {
             String[] allProvinces = response.split(",");
             if (allProvinces != null && allProvinces.length > 0) {
@@ -22,7 +22,7 @@ public class Utility {
                     Province province = new Province();
                     province.setProvinceCode(array[0]);
                     province.setProvinceName(array[1]);
-                    bestWeatherDB.saveProvince(province);
+                    BestWeatherDB.saveProvince(province);
                 }
                 return true;
             }
@@ -31,7 +31,7 @@ public class Utility {
         return false;
     }
 
-    public static boolean handleCitiesResponse(bestWeatherDB bestWeatherDB,
+    public static boolean handleCitiesResponse(BestWeatherDB BestWeatherDB,
                                                String response, int provinceId) {
         if (!TextUtils.isEmpty(response)) {
             String[] allCities = response.split(",");
@@ -43,7 +43,7 @@ public class Utility {
                     city.setCityName(array[1]);
                     city.setProvinceId(provinceId);
 // 将解析出来的数据存储到City表
-                    bestWeatherDB.saveCity(city);
+                    BestWeatherDB.saveCity(city);
                 }
                 return true;
             }
@@ -51,7 +51,7 @@ public class Utility {
         return false;
     }
 
-    public static boolean handleCountiesResponse(bestWeatherDB bestWeatherDB,
+    public static boolean handleCountiesResponse(BestWeatherDB BestWeatherDB,
                                                  String response, int cityId) {
         if (!TextUtils.isEmpty(response)) {
             String[] allCounties = response.split(",");
@@ -63,7 +63,7 @@ public class Utility {
                     county.setCountyName(array[1]);
                     county.setCityId(cityId);
 // 将解析出来的数据存储到County表
-                    bestWeatherDB.saveCounty(county);
+                    BestWeatherDB.saveCounty(county);
                 }
                 return true;
             }
@@ -72,7 +72,7 @@ public class Utility {
     }
 
 
-    public synchronized static boolean handleProvincesResponse(bestWeatherDB bestWeatherDB, String response) {
+    public synchronized static boolean handleProvincesResponse(BestWeatherDB BestWeatherDB, String response) {
         if (!TextUtils.isEmpty(response)) {
             String[] allProvinces = response.split(",");
             if (allProvinces != null && allProvinces.length > 0) {
@@ -82,7 +82,7 @@ public class Utility {
                     province.setProvinceCode(array[0]);
                     province.setProvinceName(array[1]);
 // 将解析出来的数据存储到Province表
-                    bestWeatherDB.saveProvince(province);
+                    BestWeatherDB.saveProvince(province);
                 }
                 return true;
             }

@@ -16,21 +16,21 @@ import java.util.List;
  * Created by xiaohua on 2016/11/7.
  */
 
-public class bestWeatherDB {
+public class BestWeatherDB {
     public static final String DB_NAME = "best_weather";
     public static final int VERSION = 1;
-    private static bestWeatherDB bestWeatherDB;
+    private static BestWeatherDB BestWeatherDB;
     private SQLiteDatabase db;
 
-    private bestWeatherDB(Context context){
-        bestWeatherOpenHelper dbHelper = new bestWeatherOpenHelper(context,DB_NAME,null,VERSION);
+    private BestWeatherDB(Context context){
+        BestWeatherOpenHelper dbHelper = new BestWeatherOpenHelper(context,DB_NAME,null,VERSION);
         db = dbHelper.getWritableDatabase();
     }
 
-    public synchronized static bestWeatherDB getInstance(Context context){
-        if(bestWeatherDB != null)
-            bestWeatherDB = new bestWeatherDB(context);
-        return bestWeatherDB;
+    public synchronized static BestWeatherDB getInstance(Context context){
+        if(BestWeatherDB != null)
+            BestWeatherDB = new BestWeatherDB(context);
+        return BestWeatherDB;
     }
 
     public void saveProvince(Province province){
@@ -42,7 +42,7 @@ public class bestWeatherDB {
         }
     }
 
-    public List<Province> loadProvince(){
+    public List<Province> loadProvinces(){
         List<Province> list = new ArrayList<Province>();
         Cursor cursor = db.query("Province",null,null,null,null,null,null);
         if (cursor.moveToFirst()){

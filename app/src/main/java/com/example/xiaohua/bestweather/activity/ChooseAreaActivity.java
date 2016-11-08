@@ -3,9 +3,6 @@ package com.example.xiaohua.bestweather.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaohua.bestweather.db.bestWeatherDB;
+import com.example.xiaohua.bestweather.db.BestWeatherDB;
 import com.example.xiaohua.bestweather.model.City;
 import com.example.xiaohua.bestweather.model.County;
 import com.example.xiaohua.bestweather.model.Province;
@@ -39,7 +36,7 @@ public class ChooseAreaActivity extends Activity {
     private TextView titleText;
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private bestWeatherDB bestWeatherDB;
+    private BestWeatherDB BestWeatherDB;
     private List<String> dataList = new ArrayList<String>();
     private List<Province> provinceList;
     private List<City> cityList;
@@ -58,13 +55,13 @@ public class ChooseAreaActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choose_area);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
-        bestWeatherDB = com.example.xiaohua.bestweather.db.bestWeatherDB.getInstance(this);
+        BestWeatherDB = BestWeatherDB.getInstance(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int index,
@@ -82,7 +79,7 @@ public class ChooseAreaActivity extends Activity {
     }
 
     private void queryProvinces() {
-        provinceList = bestWeatherDB.loadProvince();
+        provinceList = BestWeatherDB.loadProvinces();
         if (provinceList.size() > 0) {
             dataList.clear();
             for (Province province : provinceList) {
@@ -98,7 +95,7 @@ public class ChooseAreaActivity extends Activity {
     }
 
     private void queryCities() {
-        cityList = bestWeatherDB.loadCities(selectedProvince.getId());
+        cityList = BestWeatherDB.loadCities(selectedProvince.getId());
         if (cityList.size() > 0) {
             dataList.clear();
             for (City city : cityList) {
@@ -114,7 +111,7 @@ public class ChooseAreaActivity extends Activity {
     }
 
     private void queryCounties() {
-        countyList = bestWeatherDB.loadCounties(selectedCity.getId());
+        countyList = BestWeatherDB.loadCounties(selectedCity.getId());
         if (countyList.size() > 0) {
             dataList.clear();
             for (County county : countyList) {
@@ -143,13 +140,13 @@ public class ChooseAreaActivity extends Activity {
             public void onFinish(String response) {
                 boolean result = false;
                 if ("province".equals(type)) {
-                    result = Utility.handleProvincesResponse(bestWeatherDB,
+                    result = Utility.handleProvincesResponse(BestWeatherDB,
                             response);
                 } else if ("city".equals(type)) {
-                    result = Utility.handleCitiesResponse(bestWeatherDB,
+                    result = Utility.handleCitiesResponse(BestWeatherDB,
                             response, selectedProvince.getId());
                 } else if ("county".equals(type)) {
-                    result = Utility.handleCountiesResponse(bestWeatherDB,
+                    result = Utility.handleCountiesResponse(BestWeatherDB,
                             response, selectedCity.getId());
                 }
                 if (result) {
